@@ -1,9 +1,7 @@
-# Stage 1: Build
-FROM gradle:8.0-jdk17 AS builder
+# Stage 1: Build mit Java 21
+FROM gradle:8.0-jdk21 AS builder
 WORKDIR /app
-
 COPY . .
-
 RUN chmod +x ./gradlew
 RUN ./gradlew clean bootJar -x test
 
