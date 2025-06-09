@@ -1,10 +1,13 @@
-# Stage 1: Build mit Gradle
+# Stage 1: Build
 FROM gradle:8.0-jdk17 AS builder
 WORKDIR /app
+
 COPY . .
+
+RUN chmod +x ./gradlew
 RUN ./gradlew clean bootJar -x test
 
-# Stage 2: Laufzeit-Image
+# Stage 2: Runtime
 FROM eclipse-temurin:21-jdk
 WORKDIR /app
 COPY --from=builder /app/build/libs/*.jar app.jar
