@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 👈 hinzufügen für Navigation
 
+const backendBaseUrl = "https://moviebackend-wnsu.onrender.com/api";
 
 
 function DashboardPage() {
