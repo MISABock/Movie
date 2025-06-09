@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const backendBaseUrl = "https://moviebackend-wnsu.onrender.com/api";
+const backendBaseUrl = "http://moviebackend-wnsu.onrender.com/api";
 
 function WatchlistPage() {
   const { username } = useParams(); // 👈 aus der URL z.B. /watchlist/misa
