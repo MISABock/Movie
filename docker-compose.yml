@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: movieapp-db
+    restart: always
+    environment:
+      POSTGRES_DB: movieapp
+      POSTGRES_USER: movieuser
+      POSTGRES_PASSWORD: moviepass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: movieapp-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/movieapp
+      SPRING_DATASOURCE_USERNAME: movieuser
+      SPRING_DATASOURCE_PASSWORD: moviepass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+  frontend:
+    build: ./frontend
+    container_name: movieapp-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: movieapp-pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: michael.bock999@outlook.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    depends_on:
+      - postgres
+
+
+
+volumes:
+  pgdata:
