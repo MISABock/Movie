@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+const backendBaseUrl = "https://moviebackend-wnsu.onrender.com/api";
+
 function WatchlistPage() {
   const { username } = useParams(); // 👈 aus der URL z.B. /watchlist/misa
   const [watchlist, setWatchlist] = useState([]);
@@ -8,7 +10,7 @@ function WatchlistPage() {
   useEffect(() => {
     if (!username) return;
 
-    fetch(`http://localhost:8080/api/watchlist/${username}`)
+      fetch(`${backendBaseUrl}/watchlist/${username}`)
       .then((res) => res.json())
       .then((data) => {
         setWatchlist(data);
@@ -19,9 +21,9 @@ function WatchlistPage() {
   }, [username]);
 
   const removeFromWatchlist = (imdbID) => {
-    fetch(`http://localhost:8080/api/watchlist/${username}/${imdbID}`, {
-      method: 'DELETE',
-    })
+    fetch(`${backendBaseUrl}/watchlist/${username}/${imdbID}`, 
+      {      method: 'DELETE',
+      })
       .then((res) => {
         if (!res.ok) throw new Error('Fehler beim Entfernen');
         setWatchlist((prev) => prev.filter((movie) => movie.imdbID !== imdbID));

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 👈 hinzufügen für Navigation
 
+
+
 function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [movies, setMovies] = useState([]);
@@ -10,7 +12,7 @@ function DashboardPage() {
   const navigate = useNavigate(); // 👈 Navigation-Funktion
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/movies')
+      fetch(`${backendBaseUrl}/movies`)
       .then((res) => res.json())
       .then(setMovies)
       .catch(console.error);
@@ -18,7 +20,7 @@ function DashboardPage() {
 
   useEffect(() => {
     if (!username) return;
-    fetch(`http://localhost:8080/api/watchlist/${username}`)
+      fetch(`${backendBaseUrl}/watchlist/${username}`)
       .then((res) => res.json())
       .then(setWatchlist)
       .catch(console.error);
@@ -55,7 +57,7 @@ function DashboardPage() {
       poster: movie.Poster
     };
 
-    fetch('http://localhost:8080/api/watchlist', {
+      fetch(`${backendBaseUrl}/watchlist`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(entry)
